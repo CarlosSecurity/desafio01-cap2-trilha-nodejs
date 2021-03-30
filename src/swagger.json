@@ -1,0 +1,309 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Desafio SOLID",
+      "description": "This the api documentation of Anjo Animal",
+      "version": "1.0.0",
+      "contact": {
+        "email": "carlosleonardo.df@gmail.com"
+      }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Criar um novo usuário",
+            "operationId": "createUser",
+            "requestBody": {
+                "required": true,
+                "description": "Campos obrigatórios para criação de um usuário.",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                        "type": "string"
+                        },
+                        "email": {
+                        "type": "string"
+                        }
+                    },
+                    "example": {
+                        "name": "Carlos Leonardo",
+                        "email": "carlosleonardo.df@gmail.com"
+                    }
+                    }
+                }
+                }
+            },
+            "responses": {
+                "201": {
+                "description": "Operação realizada com sucesso",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "id":{
+                                "type": "string"
+                            },
+                            "admin": {
+                                "type": "boolean"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            }
+                            },
+                            "example": {
+                                "id": "9641d346-7b7c-48a4-8e58-b0fdd72553ff",
+                                "admin": false,
+                                "name": "Atlas",
+                                "email": "atlas@fromspace.com",
+                                "created_at": "2021-03-30T14:07:28.515Z",
+                                "updated_at": "2021-03-30T14:07:28.515Z"
+                            }
+                        }
+                    }
+                }
+                },
+                "400": {
+                    "description": "Email já está sendo utilizado.",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "message": {
+                                "type": "string"
+                            }
+                            },
+                            "example" : {
+                                "error": "This email is already in use."
+                            }
+                        }
+                        }
+                    }
+                }
+            }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retorna todos os usuários",
+                "description": "Operação realizada com sucesso.",
+                "operationId": "listAllUsers",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                ],
+                "responses": {
+                  "201": {
+                    "description": "Operação realizada com sucesso.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                        "id": "9641d346-7b7c-48a4-8e58-b0fdd72553ff",
+                                        "admin": false,
+                                        "name": "Atlas",
+                                        "email": "atlas@fromspace.com",
+                                        "created_at": "2021-03-30T14:07:28.515Z",
+                                        "updated_at": "2021-03-30T14:07:28.515Z"
+                                    },
+                                    {
+                                        "id": "7443b23d-b7e8-46f1-be84-aa5e99cf0ebd",
+                                        "admin": false,
+                                        "name": "Elisa",
+                                        "email": "elisamartinss@hotmail.com",
+                                        "created_at": "2021-03-30T23:17:14.392Z",
+                                        "updated_at": "2021-03-30T23:17:14.392Z"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                  },
+                  "400": {
+                    "description": "Usuário sem permissão ou Usuário não encontrado",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                            "message": {
+                                "type": "string"
+                            }
+                            },
+                            "example" : {
+                                "error": "You need to be an administrator to list all users."
+                            }
+                        }
+                        }
+                    }
+                  }
+                }
+            }
+        },
+        "/users/{user_id}":{
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retorna um usuário específico.",
+                "description": "Operação realizada com sucesso.",
+                "operationId": "showUserProfile",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                            "id": "9641d346-7b7c-48a4-8e58-b0fdd72553ff",
+                                            "admin": false,
+                                            "name": "Atlas",
+                                            "email": "atlas@fromspace.com",
+                                            "created_at": "2021-03-30T14:07:28.515Z",
+                                            "updated_at": "2021-03-30T14:07:28.515Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                    },
+                                    "example" : {
+                                        "error": "Usern not found."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin":{
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Torna admin um usuário.",
+                "description": "Operação realizada com sucesso.",
+                "operationId": "turnUserAdmin",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                            "id": "9641d346-7b7c-48a4-8e58-b0fdd72553ff",
+                                            "admin": false,
+                                            "name": "Atlas",
+                                            "email": "atlas@fromspace.com",
+                                            "created_at": "2021-03-30T14:07:28.515Z",
+                                            "updated_at": "2021-03-30T14:07:28.515Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                    },
+                                    "example" : {
+                                        "error": "Usern not found."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
